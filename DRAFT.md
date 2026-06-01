@@ -67,7 +67,13 @@ METODOLOGI PENELITIAN
 
 Dataset
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas arcu est, faucibus nec molestie vitae, scelerisque vitae leo. Quisque elit urna, posuere id lorem a, suscipit laoreet erat. Phasellus dolor neque, posuere et quam at, auctor tincidunt diam. Vestibulum auctor quam vel magna bibendum porta.
+Penelitian ini menggunakan MRL Eye Dataset, sebuah dataset berskala besar yang berisi citra mata manusia yang dikembangkan oleh Machine Recognition Laboratory, VŠB – Technical University of Ostrava, Republik Ceko [18]. Dataset ini dirancang untuk mendukung penelitian di bidang deteksi mata, estimasi arah pandang, dan analisis frekuensi kedipan mata, khususnya dalam konteks perilaku pengemudi. Seluruh citra dalam dataset diakuisisi menggunakan kamera inframerah (*near-infrared*) pada kondisi nyata, sehingga merepresentasikan variasi lingkungan yang realistis.
+
+Dataset terdiri dari 84.898 citra mata yang dikumpulkan dari 37 subjek berbeda (33 laki-laki dan 4 perempuan). Setiap citra dilengkapi dengan anotasi yang dikodekan langsung pada nama *file* dengan format terstruktur, mencakup delapan atribut: identitas subjek, nomor citra, gender, penggunaan kacamata, kondisi mata, tingkat refleksi, kondisi pencahayaan, dan jenis sensor yang digunakan. Kondisi mata dianotasi dalam dua kelas, yaitu mata terbuka (*open*) dan mata tertutup (*closed*), yang menjadi label utama untuk tugas klasifikasi deteksi kantuk dalam penelitian ini.
+
+Berdasarkan hasil eksplorasi data, distribusi kelas kondisi mata relatif seimbang dengan 42.952 citra mata terbuka (50,6%) dan 41.946 citra mata tertutup (49,4%). Distribusi gender menunjukkan 63.173 citra (74,4%) berasal dari subjek laki-laki dan 21.725 citra (25,6%) dari subjek perempuan. Sebanyak 60.897 citra (71,7%) diambil tanpa kacamata, sedangkan 24.001 citra (28,3%) dengan kacamata. Terkait kondisi pencahayaan, 53.630 citra (63,2%) diperoleh pada pencahayaan buruk dan 31.268 citra (36,8%) pada pencahayaan baik. Variasi ini memungkinkan model yang dilatih untuk lebih *robust* terhadap perbedaan kondisi akuisisi.
+
+Citra dalam dataset diakuisisi menggunakan tiga jenis sensor dengan resolusi yang berbeda, yaitu Intel RealSense SR300 dengan resolusi 640×480 piksel (70.142 citra; 82,6%), IDS Imaging dengan resolusi 1280×1024 piksel (11.992 citra; 14,1%), dan Aptina Imaging dengan resolusi 752×480 piksel (2.764 citra; 3,3%). Penggunaan beragam sensor ini menambah variasi resolusi dan karakteristik citra dalam dataset, sehingga model yang dilatih diharapkan mampu menggeneralisasi pada berbagai kondisi perangkat keras. Jumlah citra per subjek bervariasi antara 382 hingga 10.257 citra dengan rata-rata 2.295 citra per subjek, yang mengindikasikan adanya ketidakseimbangan jumlah sampel antar individu yang perlu dipertimbangkan dalam pembagian data pelatihan dan pengujian.
 
 
 Evaluasi Model
@@ -93,3 +99,4 @@ DAFTAR PUSTAKA
 [15]	A. G. Howard, M. Zhu, B. Chen, D. Kalenichenko, W. Wang, T. Weyand, M. Andreetto, and H. Adam, "MobileNets: Efficient Convolutional Neural Networks for Mobile Vision Applications," arXiv preprint arXiv:1704.04861, 2017, doi: 10.48550/arXiv.1704.04861.
 [16]	M. Sandler, A. Howard, M. Zhu, A. Zhmoginov, and L.-C. Chen, "MobileNetV2: Inverted Residuals and Linear Bottlenecks," in Proc. IEEE/CVF Conf. Comput. Vis. Pattern Recognit. (CVPR), 2018, pp. 4510–4520, doi: 10.1109/CVPR.2018.00474.
 [17]	Y. Gulzar, "Fruit Image Classification Model Based on MobileNetV2 with Deep Transfer Learning Technique," Sustainability, vol. 15, no. 3, p. 1906, Jan. 2023, doi: 10.3390/su15031906.
+[18]	R. Fusek, "Pupil Localization Using Geodesic Distance," in Advances in Visual Computing: 13th International Symposium, ISVC 2018, Las Vegas, NV, USA, Nov. 2018, pp. 433–444, doi: 10.1007/978-3-030-03801-4_38.
