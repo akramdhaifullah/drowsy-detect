@@ -9,10 +9,8 @@ Usage:
     python utils/explore_dataset.py
 """
 
-import os
 from collections import Counter
 from pathlib import Path
-
 
 DATA_DIR = Path(__file__).resolve().parent.parent / "data" / "mrlEyes_2018_01"
 
@@ -66,7 +64,7 @@ def main():
 
     total = len(png_files)
     print(f"{'=' * 60}")
-    print(f"MRL Eye Dataset - Exploratory Data Analysis")
+    print("MRL Eye Dataset - Exploratory Data Analysis")
     print(f"{'=' * 60}")
     print(f"Direktori : {DATA_DIR}")
     print(f"Total Subjek : {len(subject_dirs)}")
@@ -111,14 +109,14 @@ def main():
         print()
 
     # Per-subject summary
-    print(f"--- Distribusi per Subjek ---")
+    print("--- Distribusi per Subjek ---")
     for subj, count in sorted(per_subject.items()):
         print(f"  {subj}: {count:>6,} citra")
     print()
 
     # Summary stats
     counts = list(per_subject.values())
-    print(f"--- Statistik per Subjek ---")
+    print("--- Statistik per Subjek ---")
     print(f"  Min  : {min(counts):,}")
     print(f"  Max  : {max(counts):,}")
     print(f"  Mean : {sum(counts) / len(counts):,.1f}")
