@@ -27,7 +27,10 @@ Tujuan dari penelitian ini adalah mengimplementasikan CNN berbasis MobileNetV2 u
 
 Batasan Masalah
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas arcu est, faucibus nec molestie vitae, scelerisque vitae leo. Quisque elit urna, posuere id lorem a, suscipit laoreet erat. Phasellus dolor neque, posuere et quam at, auctor tincidunt diam. Vestibulum auctor quam vel magna bibendum porta.
+1.	Dataset yang digunakan berupa data citra mata manusia "MRL Eye Dataset" dengan dua kelas: Drowsy dan Alert.
+2.	Evaluasi performa model dilakukan dengan metrik akurasi, precision, recall, F1-score, dan confusion matrix.
+3.	Implementasi pemrograman dilakukan menggunakan bahasa pemrograman Python dengan framework PyTorch.
+
 
 BAB II
 TINJAUAN PUSTAKA
@@ -36,13 +39,17 @@ Studi Literatur
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas arcu est, faucibus nec molestie vitae, scelerisque vitae leo. Quisque elit urna, posuere id lorem a, suscipit laoreet erat. Phasellus dolor neque, posuere et quam at, auctor tincidunt diam. Vestibulum auctor quam vel magna bibendum porta.
 
-Convolutional Neural Network
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas arcu est, faucibus nec molestie vitae, scelerisque vitae leo. Quisque elit urna, posuere id lorem a, suscipit laoreet erat. Phasellus dolor neque, posuere et quam at, auctor tincidunt diam. Vestibulum auctor quam vel magna bibendum porta.
-
 Deteksi Kantuk
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas arcu est, faucibus nec molestie vitae, scelerisque vitae leo. Quisque elit urna, posuere id lorem a, suscipit laoreet erat. Phasellus dolor neque, posuere et quam at, auctor tincidunt diam. Vestibulum auctor quam vel magna bibendum porta.
+Deteksi kantuk pada pengemudi merupakan upaya untuk mengidentifikasi tanda-tanda penurunan kewaspadaan secara otomatis guna mencegah kecelakaan lalu lintas. Sistem deteksi kantuk secara umum dapat diklasifikasikan menjadi empat kategori berdasarkan jenis data yang digunakan, yaitu berbasis citra (*image-based*), berbasis sinyal fisiologis (*biological-based*), berbasis perilaku kendaraan (*vehicle-based*), dan pendekatan gabungan (*hybrid-based*) [9]. Pendekatan berbasis citra menjadi yang paling banyak diadopsi karena sifatnya yang non-intrusif dan hanya memerlukan kamera sebagai sensor utama, sehingga lebih praktis untuk diterapkan pada kendaraan komersial [9].
+
+Pada pendekatan berbasis citra, indikator kantuk umumnya diidentifikasi melalui analisis kondisi mata, aktivitas menguap, dan pergerakan kepala pengemudi. Dua metrik yang sering digunakan untuk mengukur tingkat kantuk adalah Eye Aspect Ratio (EAR) dan Percentage of Eye Closure (PERCLOS). EAR merupakan rasio jarak vertikal terhadap jarak horizontal titik-titik *landmark* pada kelopak mata yang dapat menunjukkan kondisi mata terbuka atau tertutup secara kuantitatif [10]. Maior *et al.* mengembangkan sistem klasifikasi kantuk secara *real-time* menggunakan EAR dengan menggabungkan informasi temporal dari *frame* video berturut-turut, sehingga mampu menangkap pola kedipan mata yang mengindikasikan kantuk dan menghasilkan akurasi rata-rata sebesar 94,9% menggunakan *Support Vector Machine* (SVM) [10]. Sementara itu, PERCLOS mengukur proporsi waktu mata dalam kondisi tertutup selama periode tertentu dan telah diakui sebagai indikator kantuk yang andal dalam berbagai studi [11].
+
+Perkembangan *deep learning*, khususnya Convolutional Neural Network (CNN), membawa perubahan signifikan dalam pendekatan deteksi kantuk. CNN memiliki kemampuan untuk mengekstraksi fitur spasial dari citra wajah secara otomatis tanpa memerlukan rekayasa fitur manual (*hand-crafted features*), sehingga dapat mengenali pola visual yang lebih kompleks [12]. Majeed *et al.* mengembangkan model CNN mendalam (*deep CNN*) untuk mendeteksi kantuk berdasarkan kondisi mata dan mulut pengemudi, dengan hasil evaluasi menunjukkan performa klasifikasi yang tinggi pada dataset citra wajah pengemudi [12]. Pendekatan serupa juga dikembangkan oleh Venkateswarlu dan Ch yang merancang arsitektur ringan bernama DrowsyDetectNet, sebuah model CNN yang dioptimalkan untuk pelatihan dengan data terbatas namun tetap mampu mencapai akurasi tinggi pada klasifikasi kondisi kantuk [13].
+
+Penggunaan teknik *transfer learning* semakin memperkuat efektivitas CNN dalam deteksi kantuk. Melalui *transfer learning*, model yang telah dilatih pada dataset berskala besar seperti ImageNet dapat diadaptasi untuk tugas klasifikasi kantuk, sehingga mempercepat proses pelatihan dan meningkatkan akurasi meskipun dengan jumlah data pelatihan yang terbatas [13]. Arsitektur ringan seperti MobileNet dan MobileNetV2 menjadi pilihan yang populer karena menggunakan *depthwise separable convolution* yang mampu mengurangi jumlah parameter dan beban komputasi secara substansial tanpa kehilangan kemampuan klasifikasi [13]. Keunggulan ini memungkinkan model untuk dijalankan secara *real-time* pada perangkat dengan sumber daya terbatas seperti *embedded system* dan perangkat *edge computing* [9].
+
+Tinjauan sistematis yang dilakukan oleh Fonseca dan Ferreira terhadap 81 studi mengenai deteksi kantuk berbasis *deep learning* yang diterbitkan antara tahun 2015 hingga 2025 menunjukkan bahwa CNN, Recurrent Neural Network (RNN), dan arsitektur hibrid merupakan model yang paling umum digunakan, dengan akurasi median yang dilaporkan melebihi 95% [14]. Meskipun demikian, tinjauan tersebut juga menggarisbawahi bahwa penerapan di kondisi nyata masih menghadapi tantangan berupa variabilitas lingkungan, keterbatasan transparansi dataset, dan pertimbangan etis terkait pemantauan pengemudi secara berkelanjutan [14]. Selain itu, tren terbaru menunjukkan peningkatan penggunaan pendekatan multimodal yang menggabungkan data visual dengan sinyal fisiologis seperti EEG dan ECG untuk meningkatkan keandalan sistem deteksi pada kondisi yang beragam [9], [14].
 
 BAB III
 METODOLOGI PENELITIAN
@@ -51,7 +58,7 @@ Dataset
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas arcu est, faucibus nec molestie vitae, scelerisque vitae leo. Quisque elit urna, posuere id lorem a, suscipit laoreet erat. Phasellus dolor neque, posuere et quam at, auctor tincidunt diam. Vestibulum auctor quam vel magna bibendum porta.
 
-MobileNetV2
+MobileNetV3
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas arcu est, faucibus nec molestie vitae, scelerisque vitae leo. Quisque elit urna, posuere id lorem a, suscipit laoreet erat. Phasellus dolor neque, posuere et quam at, auctor tincidunt diam. Vestibulum auctor quam vel magna bibendum porta.
 
@@ -68,4 +75,10 @@ DAFTAR PUSTAKA
 [5]	S. Soares, T. Monteiro, A. Lobo, A. Couto, L. Cunha, and S. Ferreira, “Analyzing Driver Drowsiness: From Causes to Effects,” Sustainability, vol. 12, no. 5, p. 1971, Mar. 2020, doi: 10.3390/su12051971.
 [6]	N. R. Widyastuti and D. F. Brilianti, “The Impact of Drowsiness on Road Traffic Accidents in Yogyakarta,” Journal of Scientific Research, Education, and Technology (JSRET), vol. 3, no. 4, pp. 1651–1661, Dec. 2024, doi: 10.58526/jsret.v3i4.555.
 [7]	Muhammad Nur Ichsan, Nur Armita, Agus Eko Minarno, Fauzi Dwi Setiawan Sumadi, and Hariyady, “Increased Accuracy on Image Classification of Game Rock Paper Scissors using CNN,” Jurnal RESTI (Rekayasa Sistem dan Teknologi Informasi), vol. 6, no. 4, pp. 606–611, Aug. 2022, doi: 10.29207/resti.v6i4.4222.
-[8]	N. A. Ujilast, N. S. Firdausita, C. S. K. Aditya, and Y. Azhar, “MRI Image Based Alzheimer’s Disease Classification Using Convolutional Neural Network: EfficientNet Architecture,” Jurnal RESTI (Rekayasa Sistem dan Teknologi Informasi), vol. 8, no. 1, pp. 18–25, Jan. 2024, doi: 10.29207/resti.v8i1.5457.
+[8]	N. A. Ujilast, N. S. Firdausita, C. S. K. Aditya, and Y. Azhar, "MRI Image Based Alzheimer's Disease Classification Using Convolutional Neural Network: EfficientNet Architecture," Jurnal RESTI (Rekayasa Sistem dan Teknologi Informasi), vol. 8, no. 1, pp. 18–25, Jan. 2024, doi: 10.29207/resti.v8i1.5457.
+[9]	Y. Albadawi, M. Takruri, and M. Awad, "A Review of Recent Developments in Driver Drowsiness Detection Systems," Sensors, vol. 22, no. 5, p. 2069, Mar. 2022, doi: 10.3390/s22052069.
+[10]	C. B. S. Maior, M. J. das C. Moura, J. M. M. Santana, and I. D. Lins, "Real-time classification for autonomous drowsiness detection using eye aspect ratio," Expert Systems with Applications, vol. 158, p. 113505, Nov. 2020, doi: 10.1016/j.eswa.2020.113505.
+[11]	W. Deng and R. Wu, "Real-Time Driver-Drowsiness Detection System Using Facial Features," IEEE Access, vol. 7, pp. 118727–118738, 2019, doi: 10.1109/ACCESS.2019.2936663.
+[12]	F. Majeed, U. Shafique, M. Safran, S. Alfarhood, and I. Ashraf, "Detection of Drowsiness among Drivers Using a Novel Deep Convolutional Neural Network Model," Sensors, vol. 23, no. 21, p. 8741, Oct. 2023, doi: 10.3390/s23218741.
+[13]	M. Venkateswarlu and V. R. R. Ch, "DrowsyDetectNet: Driver Drowsiness Detection Using Lightweight CNN With Limited Training Data," IEEE Access, vol. 12, pp. 110476–110491, 2024, doi: 10.1109/ACCESS.2024.3440585.
+[14]	T. Fonseca and S. Ferreira, "Drowsiness Detection in Drivers: A Systematic Review of Deep Learning-Based Models," Applied Sciences, vol. 15, no. 16, p. 9018, 2025, doi: 10.3390/app15169018.
