@@ -31,9 +31,10 @@ Berdasarkan rumusan masalah tersebut, tujuan dari penelitian ini adalah sebagai 
 
 Batasan Masalah
 
-1.	Dataset yang digunakan berupa data citra mata manusia "MRL Eye Dataset" dengan dua kelas: Drowsy dan Alert.
-2.	Evaluasi performa model dilakukan dengan metrik akurasi, precision, recall, F1-score, dan confusion matrix.
-3.	Implementasi pemrograman dilakukan menggunakan bahasa pemrograman Python dengan framework PyTorch.
+1.	Dataset yang digunakan adalah MRL Eye Dataset yang berisi citra inframerah mata manusia. Kondisi mata diklasifikasikan ke dalam dua kelas: mata tertutup (*closed*) sebagai indikator kantuk dan mata terbuka (*open*) sebagai indikator sadar.
+2.	Arsitektur CNN yang digunakan terbatas pada MobileNetV2 dengan teknik *transfer learning*, tanpa melakukan perbandingan terhadap arsitektur lain.
+3.	Deteksi kantuk hanya didasarkan pada kondisi mata, tidak mencakup deteksi aktivitas menguap atau pergerakan kepala.
+4.	Implementasi dilakukan menggunakan bahasa pemrograman Python dengan *framework* PyTorch.
 
 
 BAB II
