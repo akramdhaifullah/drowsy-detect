@@ -11,15 +11,15 @@ Tingginya risiko kecelakaan akibat kantuk mendorong kebutuhan akan sistem pendet
 
 Beberapa penelitian sebelumnya telah mengembangkan sistem deteksi kantuk menggunakan CNN dan *transfer learning* dengan berbagai arsitektur. Albadawi *et al.* melakukan tinjauan komprehensif terhadap sistem deteksi kantuk berbasis citra, sinyal fisiologis, perilaku kendaraan, dan pendekatan hibrid [9]. Florez *et al.* membandingkan arsitektur InceptionV3, VGG16, dan ResNet50V2 untuk klasifikasi kondisi mata pada dataset NITYMED dan mencapai akurasi tertinggi sebesar 99,71% dengan ResNet50V2, namun model tersebut memiliki ukuran parameter yang besar dan kurang optimal untuk penerapan *real-time* pada perangkat terbatas [19]. Safarov *et al.* mengembangkan sistem deteksi kantuk berbasis CNN yang dikombinasikan dengan analisis Eye Aspect Ratio (EAR) dan memperoleh akurasi 97,33%, tetapi bergantung pada dataset *custom* yang terbatas variasinya [20]. Majeed *et al.* merancang model *deep* CNN untuk deteksi kantuk berdasarkan kondisi mata dan mulut dengan performa klasifikasi yang tinggi, meskipun belum mengeksplorasi efisiensi komputasional secara mendalam [12]. Venkateswarlu dan Ch mengusulkan DrowsyDetectNet, sebuah CNN ringan yang dioptimalkan untuk pelatihan dengan data terbatas, namun belum mengevaluasi performa pada dataset inframerah berskala besar seperti MRL Eye Dataset [13]. Meskipun penelitian-penelitian tersebut menunjukkan akurasi yang tinggi, sebagian besar masih menghadapi kendala pada kebutuhan komputasi yang besar, ketergantungan pada dataset yang terbatas, serta belum optimalnya implementasi pada perangkat dengan spesifikasi rendah secara *real-time*.
 
-Berdasarkan permasalahan tersebut, penelitian ini bertujuan untuk mengimplementasikan model CNN berbasis MobileNetV2 untuk mendeteksi kantuk pengemudi secara realtime menggunakan kamera. Pemilihan MobileNetV2 dilakukan karena arsitektur ini memiliki ukuran model yang ringan, proses inferensi cepat, dan tetap mampu menghasilkan akurasi yang baik pada perangkat dengan spesifikasi terbatas. Penelitian ini diharapkan dapat membantu meningkatkan keselamatan berkendara melalui sistem peringatan dini terhadap kondisi kantuk pengemudi.
+Berdasarkan celah penelitian yang telah diidentifikasi, penelitian ini mengimplementasikan model CNN berbasis MobileNetV2 dengan teknik *transfer learning* untuk mendeteksi kantuk pengemudi secara *real-time*. MobileNetV2 dipilih karena arsitektur *inverted residual* dan *linear bottleneck* yang menghasilkan jumlah parameter jauh lebih kecil dibandingkan ResNet dan VGG, sehingga memungkinkan inferensi cepat pada perangkat dengan spesifikasi terbatas [16]. Model dilatih dan dievaluasi menggunakan MRL Eye Dataset yang terdiri dari 84.898 citra inframerah mata dengan variasi sensor, pencahayaan, dan subjek yang beragam [18], sehingga mengatasi keterbatasan dataset pada penelitian sebelumnya. Penelitian ini diharapkan dapat memberikan kontribusi berupa sistem deteksi kantuk yang ringan, akurat, dan layak diterapkan sebagai peringatan dini pada kendaraan bermotor.
 
 Rumusan Masalah
 
 Berdasarkan latar belakang penelitian tersebut, diperoleh beberapa rumusan masalah sebagai berikut:
-1.	Bagaimana mengimplementasikan metode CNN untuk mendeteksi kantuk pengemudi?
-2.	Bagaimana performa arsitektur MobileNetV2 dalam klasifikasi kondisi kantuk pengemudi?
-3.	Bagaimana tingkat akurasi sistem deteksi kantuk berbasis CNN secara realtime?
-4.	Bagaimana pengaruh preprocessing citra terhadap performa model CNN?
+1.	Bagaimana implementasi model CNN berbasis MobileNetV2 dengan *transfer learning* untuk klasifikasi kondisi mata pada MRL Eye Dataset?
+2.	Bagaimana performa model MobileNetV2 berdasarkan metrik akurasi, *precision*, *recall*, dan *F1-score* dalam mengklasifikasikan kondisi kantuk pengemudi?
+3.	Bagaimana kecepatan inferensi model MobileNetV2 untuk penerapan deteksi kantuk secara *real-time*?
+4.	Bagaimana kemampuan generalisasi model terhadap variasi kondisi pencahayaan dan jenis sensor yang terdapat pada dataset?
 
 Tujuan Penelitian
 
