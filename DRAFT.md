@@ -23,7 +23,11 @@ Berdasarkan latar belakang penelitian tersebut, diperoleh beberapa rumusan masal
 
 Tujuan Penelitian
 
-Tujuan dari penelitian ini adalah mengimplementasikan CNN berbasis MobileNetV2 untuk deteksi kantuk pengemudi, mengevaluasi performa model CNN berdasarkan accuracy, precision, recall, dan FPS realtime, dan menganalisis pengaruh processing terhadap hasil klasifikasi.
+Berdasarkan rumusan masalah tersebut, tujuan dari penelitian ini adalah sebagai berikut:
+1.	Mengimplementasikan model CNN berbasis MobileNetV2 dengan teknik *transfer learning* untuk klasifikasi kondisi mata pada MRL Eye Dataset.
+2.	Mengevaluasi performa model berdasarkan metrik akurasi, *precision*, *recall*, dan *F1-score*.
+3.	Mengukur kecepatan inferensi model dalam satuan *frame per second* (FPS) untuk menilai kelayakan penerapan secara *real-time*.
+4.	Menganalisis kemampuan generalisasi model terhadap variasi kondisi pencahayaan dan jenis sensor yang terdapat pada dataset.
 
 Batasan Masalah
 
