@@ -51,6 +51,17 @@ Penggunaan teknik *transfer learning* semakin memperkuat efektivitas CNN dalam d
 
 Tinjauan sistematis yang dilakukan oleh Fonseca dan Ferreira terhadap 81 studi mengenai deteksi kantuk berbasis *deep learning* yang diterbitkan antara tahun 2015 hingga 2025 menunjukkan bahwa CNN, Recurrent Neural Network (RNN), dan arsitektur hibrid merupakan model yang paling umum digunakan, dengan akurasi median yang dilaporkan melebihi 95% [14]. Meskipun demikian, tinjauan tersebut juga menggarisbawahi bahwa penerapan di kondisi nyata masih menghadapi tantangan berupa variabilitas lingkungan, keterbatasan transparansi dataset, dan pertimbangan etis terkait pemantauan pengemudi secara berkelanjutan [14]. Selain itu, tren terbaru menunjukkan peningkatan penggunaan pendekatan multimodal yang menggabungkan data visual dengan sinyal fisiologis seperti EEG dan ECG untuk meningkatkan keandalan sistem deteksi pada kondisi yang beragam [9], [14].
 
+MobileNetV2
+
+MobileNetV2 merupakan arsitektur Convolutional Neural Network (CNN) ringan yang dirancang untuk aplikasi *computer vision* pada perangkat dengan sumber daya komputasi terbatas. Arsitektur ini dikembangkan oleh Sandler *et al.* sebagai penyempurnaan dari MobileNet generasi pertama yang diperkenalkan oleh Howard *et al.* [15]. MobileNet generasi pertama memperkenalkan konsep *depthwise separable convolution*, yaitu teknik dekomposisi operasi konvolusi standar menjadi dua tahap terpisah: *depthwise convolution* yang melakukan pemfilteran spasial pada setiap kanal input secara independen, dan *pointwise convolution* berupa konvolusi 1×1 yang menggabungkan keluaran antar kanal [15]. Teknik ini mengurangi jumlah parameter dan operasi komputasi secara drastis dibandingkan konvolusi konvensional.
+
+MobileNetV2 memperkenalkan dua inovasi arsitektural utama yang membedakannya dari pendahulunya, yaitu *inverted residual block* dan *linear bottleneck* [16]. Pada blok residual konvensional seperti yang digunakan dalam arsitektur ResNet, struktur yang diterapkan mengikuti pola *wide-narrow-wide*, di mana data dikompresi terlebih dahulu kemudian diekspansi kembali. MobileNetV2 membalik pola tersebut menjadi *narrow-wide-narrow*: lapisan input berdimensi rendah (*bottleneck*) diekspansi ke dimensi yang lebih tinggi menggunakan konvolusi 1×1 untuk menangkap fitur yang lebih kaya, kemudian dilakukan pemfilteran spasial melalui *depthwise convolution*, dan akhirnya diproyeksikan kembali ke representasi berdimensi rendah [16]. Koneksi *shortcut* ditempatkan langsung antara lapisan *bottleneck* berdimensi rendah, sehingga mengurangi kebutuhan memori selama proses inferensi secara signifikan [16].
+
+Inovasi kedua, yaitu *linear bottleneck*, menghilangkan fungsi aktivasi non-linear (ReLU) pada lapisan *bottleneck* berdimensi rendah. Sandler *et al.* menunjukkan bahwa penerapan aktivasi non-linear pada ruang berdimensi rendah menyebabkan kehilangan informasi karena ReLU dapat menghancurkan *manifold* data [16]. Dengan mempertahankan lapisan *bottleneck* dalam bentuk linear, kapasitas representasi model tetap terjaga meskipun dimensi fitur dikompres. Kombinasi kedua teknik ini menghasilkan arsitektur dengan sekitar 3,4 juta parameter dan memerlukan hanya 300 juta operasi *Multiply-Adds* untuk resolusi input 224×224, menjadikannya jauh lebih efisien dibandingkan arsitektur seperti VGG16 yang memiliki lebih dari 138 juta parameter [16].
+
+Selain efisiensi arsitektural, MobileNetV2 menyediakan *width multiplier* (α) dan *resolution multiplier* sebagai hiperparameter yang memungkinkan penyesuaian ukuran model sesuai kebutuhan perangkat keras [16]. Fleksibilitas ini memungkinkan pengembang untuk melakukan *trade-off* antara ukuran model, latensi inferensi, dan akurasi klasifikasi secara langsung. Gulzar menunjukkan bahwa MobileNetV2 yang dikombinasikan dengan *deep transfer learning* mampu mencapai akurasi klasifikasi yang kompetitif pada tugas pengenalan citra, dengan ukuran model dan kecepatan inferensi yang jauh lebih unggul dibandingkan arsitektur berat seperti VGG16 dan ResNet [17]. Keunggulan ini menjadikan MobileNetV2 sebagai *backbone* yang ideal untuk sistem deteksi kantuk secara *real-time*, di mana kecepatan pemrosesan *frame* per detik menjadi faktor kritis dalam memastikan respons sistem yang tepat waktu.
+
+
 BAB III
 METODOLOGI PENELITIAN
 
@@ -58,9 +69,6 @@ Dataset
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas arcu est, faucibus nec molestie vitae, scelerisque vitae leo. Quisque elit urna, posuere id lorem a, suscipit laoreet erat. Phasellus dolor neque, posuere et quam at, auctor tincidunt diam. Vestibulum auctor quam vel magna bibendum porta.
 
-MobileNetV3
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas arcu est, faucibus nec molestie vitae, scelerisque vitae leo. Quisque elit urna, posuere id lorem a, suscipit laoreet erat. Phasellus dolor neque, posuere et quam at, auctor tincidunt diam. Vestibulum auctor quam vel magna bibendum porta.
 
 Evaluasi Model
 
@@ -82,3 +90,6 @@ DAFTAR PUSTAKA
 [12]	F. Majeed, U. Shafique, M. Safran, S. Alfarhood, and I. Ashraf, "Detection of Drowsiness among Drivers Using a Novel Deep Convolutional Neural Network Model," Sensors, vol. 23, no. 21, p. 8741, Oct. 2023, doi: 10.3390/s23218741.
 [13]	M. Venkateswarlu and V. R. R. Ch, "DrowsyDetectNet: Driver Drowsiness Detection Using Lightweight CNN With Limited Training Data," IEEE Access, vol. 12, pp. 110476–110491, 2024, doi: 10.1109/ACCESS.2024.3440585.
 [14]	T. Fonseca and S. Ferreira, "Drowsiness Detection in Drivers: A Systematic Review of Deep Learning-Based Models," Applied Sciences, vol. 15, no. 16, p. 9018, 2025, doi: 10.3390/app15169018.
+[15]	A. G. Howard, M. Zhu, B. Chen, D. Kalenichenko, W. Wang, T. Weyand, M. Andreetto, and H. Adam, "MobileNets: Efficient Convolutional Neural Networks for Mobile Vision Applications," arXiv preprint arXiv:1704.04861, 2017, doi: 10.48550/arXiv.1704.04861.
+[16]	M. Sandler, A. Howard, M. Zhu, A. Zhmoginov, and L.-C. Chen, "MobileNetV2: Inverted Residuals and Linear Bottlenecks," in Proc. IEEE/CVF Conf. Comput. Vis. Pattern Recognit. (CVPR), 2018, pp. 4510–4520, doi: 10.1109/CVPR.2018.00474.
+[17]	Y. Gulzar, "Fruit Image Classification Model Based on MobileNetV2 with Deep Transfer Learning Technique," Sustainability, vol. 15, no. 3, p. 1906, Jan. 2023, doi: 10.3390/su15031906.
