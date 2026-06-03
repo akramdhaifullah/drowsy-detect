@@ -12,7 +12,10 @@ Usage:
 from collections import Counter
 from pathlib import Path
 
+import matplotlib.pyplot as plt
+
 DATA_DIR = Path(__file__).resolve().parent.parent / "data" / "mrlEyes_2018_01"
+FIGURES_DIR = Path(__file__).resolve().parent.parent / "figures"
 
 LABELS = {
     "gender": {"0": "Laki-laki", "1": "Perempuan"},
@@ -121,6 +124,46 @@ def main():
     print(f"  Max  : {max(counts):,}")
     print(f"  Mean : {sum(counts) / len(counts):,.1f}")
     print()
+
+    # Plot Eye State Distribution
+    eye_counts = counters["eye_state"]
+    labels = [LABELS["eye_state"][k] for k in eye_counts.keys()]
+    values = [eye_counts[k] for k in eye_counts.keys()]
+    colors = ["forestgreen", "firebrick"]
+
+    plt.figure(figsize=(6, 4))
+
+    plt.bar(
+        labels,
+        values,
+        color=colors,
+        edgecolor="black",
+        linewidth=0.5,
+    )
+
+    plt.title("Distribusi Kondisi Mata", fontweight="bold")
+    plt.ylabel("Jumlah Citra")
+
+    plt.ylim(0, max(values) * 1.15)
+    offset = max(values) * 0.015
+
+    for i, v in enumerate(values):
+        plt.text(
+            i,
+            v + offset,
+            f"{v:,}",
+            ha="center",
+            va="bottom",
+        )
+
+    plt.tight_layout()
+
+    plt.savefig(
+        FIGURES_DIR / "eye_state_distribution.png",
+        dpi=300,
+    )
+
+    plt.close()
 
 
 if __name__ == "__main__":
