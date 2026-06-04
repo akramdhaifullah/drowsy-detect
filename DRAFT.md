@@ -114,6 +114,14 @@ Tahap preprocessing berperan penting untuk memastikan agar kualitas data seragam
 
 Ut id fermentum ipsum. Mauris placerat nisl in lorem condimentum, non lobortis ante sollicitudin. Vivamus quis nibh ut urna pharetra finibus eget vitae arcu. Suspendisse dapibus pretium orci, eget suscipit neque sodales non.
 
+3.3.2 Augmentation
+
+Ut id fermentum ipsum. Mauris placerat nisl in lorem condimentum, non lobortis ante sollicitudin. Vivamus quis nibh ut urna pharetra finibus eget vitae arcu. Suspendisse dapibus pretium orci, eget suscipit neque sodales non.
+
+3.3.3 Normalization
+
+Ut id fermentum ipsum. Mauris placerat nisl in lorem condimentum, non lobortis ante sollicitudin. Vivamus quis nibh ut urna pharetra finibus eget vitae arcu. Suspendisse dapibus pretium orci, eget suscipit neque sodales non.
+
 3.4 Data Splitting
 
 Selanjutnya, dataset dibagi menjadi 3 bagian, yaitu data latih (training data), data validasi (validation data), dan data uji (testing data) dengan perbandingan 70:10:20. Data latih digunakan untuk melatih model, data validasi untuk mengevaluasi performa model selama proses latihan, dan data uji digunakan untuk evaluasi final performa model.
