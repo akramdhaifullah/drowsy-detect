@@ -108,7 +108,7 @@ Citra dalam dataset diakuisisi menggunakan tiga jenis sensor dengan resolusi yan
 
 3.3 Data Preprocessing
 
-Tahap preprocessing berperan penting untuk memastikan agar kualitas data seragam dan optimal. Rangkaian proses ini melibatkan beberapa langkah.
+Data mentah dari MRL Eye Dataset memiliki resolusi yang bervariasi antar sensor (640×480 hingga 1280×1024 piksel) serta perbedaan kondisi pencahayaan, sehingga diperlukan tahap preprocessing untuk menyeragamkan dimensi dan kualitas citra sebelum digunakan sebagai input model. Tahap preprocessing dalam penelitian ini terdiri dari tiga langkah utama: *resizing* untuk menyeragamkan dimensi citra, augmentasi untuk meningkatkan variasi data pelatihan, dan normalisasi untuk menyesuaikan skala nilai piksel.
 
 3.3.1 Resizing
 
