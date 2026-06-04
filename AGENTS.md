@@ -181,6 +181,19 @@ Utamakan sumber:
 4. Standar resmi
 5. Dokumentasi teknis resmi
 
+## Referensi Terkini (Literature Recency)
+
+* Saat menulis tinjauan pustaka, pembahasan metode, analisis hasil, maupun argumentasi ilmiah, utamakan mengutip penelitian yang diterbitkan dalam 5 tahun terakhir apabila tersedia dan relevan.
+* Prioritaskan jurnal internasional bereputasi, conference proceedings terindeks, dan publikasi ilmiah yang masih relevan dengan perkembangan terbaru pada bidang penelitian.
+* Referensi yang lebih lama tetap dapat digunakan untuk:
+  * Teori dasar (foundational theories)
+  * Metode klasik yang menjadi acuan utama
+  * Standar atau konsep fundamental yang masih berlaku
+* Setiap klaim mengenai perkembangan terkini, tren penelitian, state-of-the-art, atau perbandingan metode sebaiknya didukung oleh referensi dalam rentang 5 tahun terakhir.
+* Pada saat menyusun tinjauan pustaka, usahakan menyertakan beberapa penelitian terbaru yang relevan untuk menunjukkan posisi dan kontribusi penelitian terhadap perkembangan ilmu pengetahuan saat ini.
+* Jika tersedia, bandingkan hasil penelitian dengan studi-studi terkini yang memiliki topik, dataset, metode, atau tujuan penelitian yang serupa.
+* Jangan mengandalkan referensi lama apabila telah tersedia penelitian yang lebih baru dan lebih relevan.
+
 ## Hindari
 
 * Blog tanpa kredibilitas
