@@ -10,12 +10,11 @@ import torch.nn as nn
 from torch.utils.data import DataLoader
 from torchvision import transforms
 from torchvision.models import MobileNet_V2_Weights, mobilenet_v2
+from torchvision.transforms import InterpolationMode
 
-from dataset import MRLEyeDataset
-from evaluate import evaluate_model
-from splits import subject_wise_split
-
-print("Hello from drowsy-detect!")
+from src.dataset import MRLEyeDataset
+from src.evaluate import evaluate_model
+from src.splits import subject_wise_split
 
 # ----- DEVICE -----
 
@@ -24,29 +23,30 @@ print(f"Using device: {device}")
 
 # ----- TRANSFORMS -----
 
-# Caltech101 Transforms
-# transform = transforms.Compose(
-#     [
-#         transforms.Resize((224, 224)),
-#         transforms.Lambda(lambda img: img.convert("RGB")),
-#         transforms.ToTensor(),
-#         transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
-#     ]
-# )
-
-# mrlEyes Transforms
-transform = transforms.Compose(
+# Training transforms (with augmentation)
+train_transform = transforms.Compose(
     [
-        transforms.Resize((224, 224)),
+        transforms.Resize((224, 224), interpolation=InterpolationMode.BILINEAR),
+        transforms.RandomHorizontalFlip(p=0.5),
+        transforms.RandomRotation(degrees=10),
+        transforms.ColorJitter(brightness=0.2, contrast=0.2),
+        transforms.RandomAffine(degrees=0, translate=(0.05, 0.05), scale=(0.95, 1.05)),
+        transforms.GaussianBlur(kernel_size=3, sigma=(0.1, 1.0)),
+        transforms.ToTensor(),
+        transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
+    ]
+)
+
+# Validation/Test transforms (no augmentation)
+eval_transform = transforms.Compose(
+    [
+        transforms.Resize((224, 224), interpolation=InterpolationMode.BILINEAR),
         transforms.ToTensor(),
         transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
     ]
 )
 
 # ----- DATASET -----
-
-# Caltech101 Dataset
-# dataset = datasets.Caltech101(root="./data", download=True, transform=transform)
 
 # mrlEyes Dataset
 image_paths = glob.glob(
@@ -59,9 +59,9 @@ train_files, val_files, test_files = subject_wise_split(
     val_size=0.1,
 )
 
-train_dataset = MRLEyeDataset(train_files, transform=transform)
-val_dataset = MRLEyeDataset(val_files, transform=transform)
-test_dataset = MRLEyeDataset(test_files, transform=transform)
+train_dataset = MRLEyeDataset(train_files, transform=train_transform)
+val_dataset = MRLEyeDataset(val_files, transform=eval_transform)
+test_dataset = MRLEyeDataset(test_files, transform=eval_transform)
 
 # ----- SPLIT VERIFICATION -----
 
@@ -70,9 +70,7 @@ print(f"Val images: {len(val_files)}")
 print(f"Test images: {len(test_files)}")
 
 train_subjects = {os.path.basename(os.path.dirname(p)) for p in train_files}
-
 val_subjects = {os.path.basename(os.path.dirname(p)) for p in val_files}
-
 test_subjects = {os.path.basename(os.path.dirname(p)) for p in test_files}
 
 print(f"Train subjects: {len(train_subjects)}")
@@ -284,8 +282,6 @@ plt.savefig(
     bbox_inches="tight",
     dpi=300,
 )
-
-plt.show()
 plt.close()
 
 # Accuracy Curve
@@ -305,6 +301,4 @@ plt.savefig(
     bbox_inches="tight",
     dpi=300,
 )
-
-plt.show()
 plt.close()

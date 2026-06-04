@@ -29,7 +29,6 @@ Berdasarkan rumusan masalah tersebut, tujuan dari penelitian ini adalah sebagai 
 3.	Mengukur kecepatan inferensi model dalam satuan frame per second (FPS) untuk menilai kelayakan penerapan secara real-time.
 4.	Menganalisis kemampuan generalisasi model terhadap variasi kondisi pencahayaan dan jenis sensor yang terdapat pada dataset.
 
-
 1.4 Batasan Masalah
 
 1.	Dataset yang digunakan adalah MRL Eye Dataset yang berisi citra inframerah mata manusia. Kondisi mata diklasifikasikan ke dalam dua kelas: mata tertutup (closed) sebagai indikator kantuk dan mata terbuka (open) sebagai indikator sadar.
@@ -77,7 +76,6 @@ Penggunaan teknik transfer learning semakin memperkuat efektivitas CNN dalam det
 
 Tinjauan sistematis yang dilakukan oleh Fonseca dan Ferreira terhadap 81 studi mengenai deteksi kantuk berbasis deep learning yang diterbitkan antara tahun 2015 hingga 2025 menunjukkan bahwa CNN, Recurrent Neural Network (RNN), dan arsitektur gabungan merupakan model yang paling umum digunakan, dengan akurasi median yang dilaporkan melebihi 95% [18]. Meskipun demikian, tinjauan tersebut juga menggarisbawahi bahwa penerapan di kondisi nyata masih menghadapi tantangan berupa variabilitas lingkungan, keterbatasan transparansi dataset, dan pertimbangan etis terkait pemantauan pengemudi secara berkelanjutan [18]. Selain itu, tren terbaru menunjukkan peningkatan penggunaan pendekatan multimodal yang menggabungkan data visual dengan sinyal fisiologis seperti EEG dan ECG untuk meningkatkan keandalan sistem deteksi pada kondisi yang beragam [10], [18].
 
-
 2.3 MobileNetV2
 
 MobileNetV2 merupakan arsitektur Convolutional Neural Network (CNN) ringan yang dirancang untuk aplikasi computer vision pada perangkat dengan sumber daya komputasi terbatas. Arsitektur ini dikembangkan oleh Sandler et al. sebagai penyempurnaan dari MobileNet generasi pertama yang diperkenalkan oleh Howard et al. [19]. MobileNet generasi pertama memperkenalkan konsep depthwise separable convolution, yaitu teknik dekomposisi operasi konvolusi standar menjadi dua tahap terpisah: depthwise convolution yang melakukan pemfilteran spasial pada setiap kanal input secara independen, dan pointwise convolution berupa konvolusi 1×1 yang menggabungkan keluaran antar kanal [19]. Teknik ini mengurangi jumlah parameter dan operasi komputasi secara drastis dibandingkan konvolusi konvensional.
@@ -87,7 +85,6 @@ MobileNetV2 memperkenalkan dua inovasi arsitektural utama yang membedakannya dar
 Inovasi kedua, yaitu linear bottleneck, menghilangkan fungsi aktivasi non-linear (ReLU) pada lapisan bottleneck berdimensi rendah. Sandler et al. menunjukkan bahwa penerapan aktivasi non-linear pada ruang berdimensi rendah menyebabkan kehilangan informasi karena ReLU dapat menghancurkan manifold data [20]. Dengan mempertahankan lapisan bottleneck dalam bentuk linear, kapasitas representasi model tetap terjaga meskipun dimensi fitur dikompres. Kombinasi kedua teknik ini menghasilkan arsitektur dengan sekitar 3,4 juta parameter dan memerlukan hanya 300 juta operasi Multiply-Adds untuk resolusi input 224×224, menjadikannya jauh lebih efisien dibandingkan arsitektur seperti VGG16 yang memiliki lebih dari 138 juta parameter [20].
 
 Selain efisiensi arsitektural, MobileNetV2 menyediakan width multiplier (α) dan resolution multiplier sebagai hiperparameter yang memungkinkan penyesuaian ukuran model sesuai kebutuhan perangkat keras [20]. Fleksibilitas ini memungkinkan pengembang untuk melakukan trade-off antara ukuran model, latensi inferensi, dan akurasi klasifikasi secara langsung. Gulzar menunjukkan bahwa MobileNetV2 yang dikombinasikan dengan deep transfer learning mampu mencapai akurasi klasifikasi yang kompetitif pada tugas pengenalan citra, dengan ukuran model dan kecepatan inferensi yang jauh lebih unggul dibandingkan arsitektur berat seperti VGG16 dan ResNet [21]. Keunggulan ini menjadikan MobileNetV2 sebagai backbone yang ideal untuk sistem deteksi kantuk secara real-time, di mana kecepatan pemrosesan frame per detik menjadi faktor kritis dalam memastikan respons sistem yang tepat waktu.
-
 
 BAB III
 METODOLOGI PENELITIAN
@@ -118,7 +115,11 @@ Proses *resizing* dilakukan menggunakan metode interpolasi bilinear, yaitu tekni
 
 3.3.2 Augmentation
 
-Ut id fermentum ipsum. Mauris placerat nisl in lorem condimentum, non lobortis ante sollicitudin. Vivamus quis nibh ut urna pharetra finibus eget vitae arcu. Suspendisse dapibus pretium orci, eget suscipit neque sodales non.
+Augmentasi data merupakan teknik untuk meningkatkan jumlah dan variasi data pelatihan secara artifisial melalui penerapan transformasi pada citra asli, sehingga model dapat mempelajari representasi fitur yang lebih *robust* dan mengurangi risiko *overfitting* [26]. Teknik ini diterapkan hanya pada data pelatihan (*training set*), sedangkan data validasi dan data uji tetap menggunakan citra tanpa augmentasi agar evaluasi mencerminkan performa model pada kondisi sesungguhnya.
+
+Penelitian ini menerapkan lima teknik augmentasi geometrik dan fotometrik. Pertama, *random horizontal flip* dengan probabilitas 0,5 diterapkan untuk membalik citra secara horizontal, mengingat kondisi mata terbuka maupun tertutup bersifat simetris secara bilateral sehingga pembalikan tidak mengubah makna semantik citra [26]. Kedua, *random rotation* dengan rentang ±10 derajat digunakan untuk mensimulasikan variasi posisi kepala pengemudi yang tidak selalu tegak lurus terhadap kamera [12]. Ketiga, *color jitter* diterapkan dengan variasi *brightness* dan *contrast* masing-masing sebesar ±0,2 untuk mensimulasikan perubahan kondisi pencahayaan yang umum terjadi pada lingkungan berkendara [10]. Keempat, *random affine* dengan translasi sebesar 5% dan perubahan skala antara 0,95 hingga 1,05 digunakan untuk mensimulasikan pergeseran posisi dan jarak mata terhadap kamera. Kelima, *Gaussian blur* dengan ukuran kernel 3×3 dan sigma antara 0,1 hingga 1,0 diterapkan untuk meningkatkan ketahanan model terhadap variasi ketajaman citra yang dapat diakibatkan oleh perbedaan kualitas sensor [26].
+
+Seluruh teknik augmentasi diterapkan secara acak (*stochastic*) pada setiap *epoch* pelatihan, sehingga model menerima variasi citra yang berbeda pada setiap iterasi tanpa memperbesar ukuran dataset secara eksplisit [26]. Pendekatan ini memungkinkan model untuk menggeneralisasi pola visual yang lebih beragam tanpa memerlukan pengumpulan data tambahan.
 
 3.3.3 Normalization
 
@@ -189,3 +190,4 @@ DAFTAR PUSTAKA
 [23]	A. Tharwat, “Classification assessment methods,” Applied Computing and Informatics, vol. 17, no. 1, pp. 168–192, Jan. 2021, doi: 10.1016/j.aci.2018.08.003.
 [24]	M. Grandini, E. Bagli, and G. Visani, "Metrics for Multi-Class Classification: an Overview," arXiv preprint arXiv:2008.05756, Aug. 2020, doi: https://doi.org/10.48550/arXiv.2008.05756.
 [25]	D. Hirahara, E. Takaya, T. Takahara, and T. Ueda, "Effect of the Pixel Interpolation Method for Downsampling Medical Images on Deep Learning Accuracy," J. Comput. Commun., vol. 9, no. 11, pp. 150–156, 2021, doi: 10.4236/jcc.2021.911010.
+[26]	C. Shorten and T. M. Khoshgoftaar, "A survey on Image Data Augmentation for Deep Learning," J. Big Data, vol. 6, no. 1, p. 60, Jul. 2019, doi: 10.1186/s40537-019-0197-0.
