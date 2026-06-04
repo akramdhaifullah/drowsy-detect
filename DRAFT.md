@@ -123,7 +123,9 @@ Seluruh teknik augmentasi diterapkan secara acak (*stochastic*) pada setiap *epo
 
 3.3.3 Normalization
 
-Ut id fermentum ipsum. Mauris placerat nisl in lorem condimentum, non lobortis ante sollicitudin. Vivamus quis nibh ut urna pharetra finibus eget vitae arcu. Suspendisse dapibus pretium orci, eget suscipit neque sodales non.
+Normalisasi merupakan tahap akhir dalam *pipeline* preprocessing yang bertujuan untuk menyesuaikan distribusi nilai piksel agar sesuai dengan distribusi data yang digunakan saat pelatihan awal (*pre-training*) model. Proses ini terdiri dari dua langkah berurutan. Langkah pertama adalah konversi citra dari format integer dengan rentang nilai [0, 255] ke format *floating-point* dengan rentang [0, 1] melalui operasi `ToTensor` pada PyTorch. Langkah kedua adalah normalisasi *z-score* menggunakan nilai *mean* dan *standard deviation* per kanal warna.
+
+Pada penelitian ini, normalisasi dilakukan menggunakan statistik dataset ImageNet Large Scale Visual Recognition Challenge (ILSVRC) [27], yaitu *mean* = [0,485; 0,456; 0,406] dan *standard deviation* = [0,229; 0,224; 0,225] untuk masing-masing kanal R, G, dan B. Penggunaan statistik ImageNet merupakan praktik standar pada *transfer learning* dengan model *pre-trained*, karena bobot awal model telah dioptimalkan berdasarkan distribusi data tersebut [14], [21]. Normalisasi dengan rumus x' = (x - mean) / std menghasilkan distribusi data input yang berpusat di sekitar nol dengan varians mendekati satu, sehingga mempercepat konvergensi selama proses *fine-tuning* dan menjaga stabilitas numerik pada perhitungan gradien [26].
 
 3.4 Data Splitting
 
@@ -191,3 +193,4 @@ DAFTAR PUSTAKA
 [24]	M. Grandini, E. Bagli, and G. Visani, "Metrics for Multi-Class Classification: an Overview," arXiv preprint arXiv:2008.05756, Aug. 2020, doi: https://doi.org/10.48550/arXiv.2008.05756.
 [25]	D. Hirahara, E. Takaya, T. Takahara, and T. Ueda, "Effect of the Pixel Interpolation Method for Downsampling Medical Images on Deep Learning Accuracy," J. Comput. Commun., vol. 9, no. 11, pp. 150–156, 2021, doi: 10.4236/jcc.2021.911010.
 [26]	C. Shorten and T. M. Khoshgoftaar, "A survey on Image Data Augmentation for Deep Learning," J. Big Data, vol. 6, no. 1, p. 60, Jul. 2019, doi: 10.1186/s40537-019-0197-0.
+[27]	O. Russakovsky et al., "ImageNet Large Scale Visual Recognition Challenge," Int. J. Comput. Vis., vol. 115, no. 3, pp. 211–252, Dec. 2015, doi: 10.1007/s11263-015-0816-y.
