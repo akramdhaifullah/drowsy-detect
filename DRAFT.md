@@ -112,7 +112,9 @@ Data mentah dari MRL Eye Dataset memiliki resolusi yang bervariasi antar sensor 
 
 3.3.1 Resizing
 
-Ut id fermentum ipsum. Mauris placerat nisl in lorem condimentum, non lobortis ante sollicitudin. Vivamus quis nibh ut urna pharetra finibus eget vitae arcu. Suspendisse dapibus pretium orci, eget suscipit neque sodales non.
+Arsitektur MobileNetV2 menerima input citra dengan dimensi tetap sebesar 224×224×3 piksel, sesuai dengan konfigurasi standar yang digunakan pada pelatihan ImageNet [14]. Citra dalam MRL Eye Dataset memiliki resolusi yang bervariasi tergantung pada sensor yang digunakan: 640×480 piksel (Intel RealSense SR300), 1280×1024 piksel (IDS Imaging), dan 752×480 piksel (Aptina Imaging) [15]. Perbedaan resolusi ini mengharuskan seluruh citra diubah ke dimensi seragam agar dapat diproses oleh model secara konsisten.
+
+Proses *resizing* dilakukan menggunakan metode interpolasi bilinear, yaitu teknik yang menghitung nilai piksel baru berdasarkan rata-rata tertimbang dari empat piksel terdekat pada citra asli [25]. Metode ini dipilih karena menghasilkan keseimbangan antara kualitas visual dan efisiensi komputasi. Hirahara *et al.* menunjukkan bahwa pemilihan metode interpolasi memiliki pengaruh terhadap akurasi klasifikasi model *deep learning*, di mana interpolasi bilinear dan bikubik menghasilkan performa yang lebih baik dibandingkan metode *nearest-neighbor* pada tugas klasifikasi citra [25]. Seluruh citra di-*resize* langsung ke dimensi 224×224 piksel tanpa mempertahankan *aspect ratio* asli, mengikuti pendekatan standar yang umum diterapkan pada arsitektur CNN berbasis *transfer learning* dengan bobot *pre-trained* ImageNet [14], [21].
 
 3.3.2 Augmentation
 
@@ -185,4 +187,5 @@ DAFTAR PUSTAKA
 [21]	Y. Gulzar, “Fruit Image Classification Model Based on MobileNetV2 with Deep Transfer Learning Technique,” Sustainability, vol. 15, no. 3, p. 1906, Jan. 2023, doi: 10.3390/su15031906.
 [22]	D. M. W. Powers, “Evaluation: from precision, recall and F-measure to ROC, informedness, markedness and correlation,” International Journal of Machine Learning Technology, vol. 2, no. 1, pp. 37–63, Oct. 2020.
 [23]	A. Tharwat, “Classification assessment methods,” Applied Computing and Informatics, vol. 17, no. 1, pp. 168–192, Jan. 2021, doi: 10.1016/j.aci.2018.08.003.
-[24]	M. Grandini, E. Bagli, and G. Visani, “Metrics for Multi-Class Classification: an Overview,” arXiv preprint arXiv:2008.05756, Aug. 2020, doi: https://doi.org/10.48550/arXiv.2008.05756.
+[24]	M. Grandini, E. Bagli, and G. Visani, "Metrics for Multi-Class Classification: an Overview," arXiv preprint arXiv:2008.05756, Aug. 2020, doi: https://doi.org/10.48550/arXiv.2008.05756.
+[25]	D. Hirahara, E. Takaya, T. Takahara, and T. Ueda, "Effect of the Pixel Interpolation Method for Downsampling Medical Images on Deep Learning Accuracy," J. Comput. Commun., vol. 9, no. 11, pp. 150–156, 2021, doi: 10.4236/jcc.2021.911010.
