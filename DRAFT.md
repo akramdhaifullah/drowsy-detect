@@ -167,15 +167,9 @@ Selain metrik klasifikasi, evaluasi kecepatan inferensi juga dilakukan untuk men
 
 KESIMPULAN
 
-Berdasarkan penelitian yang telah dilakukan, diperoleh kesimpulan sebagai berikut:
+Penelitian ini mengusulkan implementasi model CNN berbasis MobileNetV2 dengan teknik *transfer learning* untuk mendeteksi kantuk pengemudi melalui klasifikasi kondisi mata pada MRL Eye Dataset. MobileNetV2 dipilih sebagai arsitektur utama karena keseimbangan antara efisiensi komputasional dan akurasi klasifikasi yang menjadikannya sesuai untuk penerapan *real-time* pada perangkat dengan spesifikasi terbatas. Dataset yang digunakan terdiri dari 84.898 citra inframerah mata dari 37 subjek dengan variasi kondisi pencahayaan, jenis sensor, dan penggunaan kacamata, sehingga memungkinkan evaluasi kemampuan generalisasi model secara komprehensif.
 
-1. Implementasi model CNN berbasis MobileNetV2 dengan teknik *transfer learning* berhasil diterapkan untuk klasifikasi kondisi mata pada MRL Eye Dataset. Model menggunakan bobot *pre-trained* ImageNet sebagai inisialisasi, dengan lapisan klasifikasi akhir yang disesuaikan untuk tugas klasifikasi biner (mata terbuka dan mata tertutup). Tahap preprocessing mencakup *resizing* ke dimensi 224×224 piksel menggunakan interpolasi bilinear, augmentasi data dengan lima teknik transformasi geometrik dan fotometrik, serta normalisasi menggunakan statistik ImageNet. Pembagian data dilakukan secara *subject-wise* dengan rasio 70:10:20 untuk mencegah *data leakage* antar subset.
-
-2. Evaluasi performa model dilakukan menggunakan metrik akurasi, *precision*, *recall*, dan *F1-score* yang diturunkan dari *confusion matrix*. Kombinasi metrik tersebut memberikan gambaran komprehensif mengenai kemampuan model dalam mengklasifikasikan kondisi kantuk pengemudi, baik dari aspek ketepatan prediksi positif maupun kemampuan mendeteksi seluruh sampel positif.
-
-3. Pengukuran kecepatan inferensi menunjukkan bahwa arsitektur MobileNetV2 yang dirancang dengan *inverted residual block* dan *depthwise separable convolution* memungkinkan pemrosesan citra dengan kecepatan yang memadai untuk penerapan deteksi kantuk secara *real-time*. Efisiensi komputasional ini menjadikan model layak untuk dijalankan pada perangkat dengan spesifikasi terbatas.
-
-4. Penggunaan MRL Eye Dataset yang mencakup variasi kondisi pencahayaan (baik dan buruk), jenis sensor (Intel RealSense SR300, IDS Imaging, dan Aptina Imaging), serta penggunaan kacamata memungkinkan evaluasi kemampuan generalisasi model terhadap berbagai kondisi akuisisi. Strategi *subject-wise split* memastikan bahwa evaluasi mencerminkan kemampuan model dalam mengenali pola kantuk pada subjek yang belum pernah dilihat selama pelatihan.
+Tahap preprocessing dirancang untuk menyeragamkan dimensi citra melalui *resizing* ke 224×224 piksel, meningkatkan variasi data pelatihan melalui augmentasi geometrik dan fotometrik, serta menyesuaikan distribusi nilai piksel melalui normalisasi menggunakan statistik ImageNet. Pembagian data menggunakan strategi *subject-wise split* dengan rasio 70:10:20 untuk mencegah *data leakage* dan memastikan evaluasi yang merepresentasikan kemampuan model pada subjek baru. Performa model akan dievaluasi menggunakan metrik akurasi, *precision*, *recall*, dan *F1-score*, serta pengukuran kecepatan inferensi dalam satuan FPS untuk menilai kelayakan penerapan secara *real-time*. Penelitian ini diharapkan dapat menghasilkan sistem deteksi kantuk yang ringan, akurat, dan layak diterapkan sebagai peringatan dini pada kendaraan bermotor.
 
 DAFTAR PUSTAKA
 
